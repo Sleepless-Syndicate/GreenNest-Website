@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buyer Login – GreenNest</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+<div class="login-container">
+  <div class="form-box">
+    <h2 id="userFormTitle">Buyer Sign In</h2>
+    <form id="userForm">
+      <input type="text" placeholder="Username" required />
+      <div id="extraUserFields" class="hidden">
+        <input type="tel" placeholder="Phone Number" />
+        <input type="email" placeholder="Email" />
+      </div>
+      <div class="password-container">
+        <input type="password" id="userPassword" placeholder="Password" required />
+        <i class="fa-solid fa-eye toggle-eye" onclick="togglePassword('userPassword', this)"></i>
+      </div>
+      <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
+      <button type="submit">Submit</button>
+      <p class="toggle-link" onclick="toggleForm('user')">Don't have an account? Sign up</p>
+    </form>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
