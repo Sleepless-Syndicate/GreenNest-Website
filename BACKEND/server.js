@@ -36,6 +36,11 @@ app.get('/reset-password.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../FRONTEND/HTML/reset-password.html'));
 });
 
+// Route for homepage again
+app.get('/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../FRONTEND/HTML/index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
