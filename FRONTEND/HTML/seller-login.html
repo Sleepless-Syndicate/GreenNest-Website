@@ -11,23 +11,23 @@
 <div class="login-container">
   <div class="form-box">
     <h2 id="sellerFormTitle">Seller Sign In</h2>
-    <form id="sellerForm">
-      <input type="text" placeholder="Username" required />
+    <form action="/login" id="userForm" method="post">
+      <input type="text" name="UserName" placeholder="Username" required />
 
       <div id="extraSellerFields" class="hidden">
-        <input type="tel" placeholder="Phone Number" />
-        <input type="email" placeholder="Email" />
+        <input type="tel" name="PhoneNumber" placeholder="Phone Number" />
+        <input type="email" name="Email" placeholder="Email" />
       </div>
 
       <div class="password-container">
-        <input type="password" id="sellerPassword" placeholder="Password" required />
+        <input type="password" name="Password" id="sellerPassword" placeholder="Password" required />
         <i class="fa-solid fa-eye toggle-eye" onclick="togglePassword('sellerPassword', this)"></i>
       </div>
 
       <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
 
       <button type="submit">Submit</button>
-      <p class="toggle-link" onclick="toggleForm('seller')">Don't have an account? Sign up</p>
+      <a href="sign-up.html" class="sign-up-link">Don't have an account? Sign up</a>
     </form>
   </div>
 </div>

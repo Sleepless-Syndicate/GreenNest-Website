@@ -134,6 +134,20 @@ body {
   text-decoration: underline;
 }
 
+.sign-up-link {
+  display: block;
+  margin-top: 6px;
+  margin-right: 90px;
+  font-size: 0.9rem;
+  text-align: right;
+  text-decoration: none;
+  color: #3a5a40;
+}
+
+.sign-up-link:hover {
+  text-decoration: underline;
+}
+
 button {
   width: 100%;
   padding: 12px;
