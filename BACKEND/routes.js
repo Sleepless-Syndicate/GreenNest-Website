@@ -162,54 +162,72 @@ router.post('/verify-otp', async (req, res) => {
   try {
     console.log('🔍 Verifying OTP for:', normalizedContact);
 
-    // Find the OTP record in MongoDB
+    // 🔎 Search for matching OTP
     const record = await Otp.findOne({ email: normalizedContact });
 
     if (!record) {
       return res.status(400).send('❌ No OTP found for this contact');
     }
 
+    // ⏰ Check expiration
     if (Date.now() > record.expiresAt.getTime()) {
       await Otp.deleteOne({ _id: record._id });
-      return res.status(410).send('❌ OTP expired');
+      return res.status(410).send('❌ OTP has expired');
     }
 
+    // ❌ Incorrect code
     if (record.code !== otp) {
       return res.status(401).send('❌ Invalid OTP');
     }
 
-    // OTP is valid — delete it and proceed
+    // ✅ Success: delete used OTP, save email in session
     await Otp.deleteOne({ _id: record._id });
-    console.log(`✅ OTP verified for: ${normalizedContact}`);
-    res.redirect('/reset-password.html');
-  } catch (err) {
-    console.error('❌ OTP verification error:', err);
-    res.status(500).send('Internal Server Error');
+    req.session.verifiedEmail = normalizedContact;
+
+    console.log(`✅ OTP verified for ${normalizedContact}`);
+    return res.redirect('/reset-password.html');
+  } catch (error) {
+    console.error('❌ OTP verification error:', error);
+    return res.status(500).send('Internal Server Error');
   }
 });
 
 // Reset Password Route
 router.post('/reset-password', async (req, res) => {
-  const { Email, newPassword, confirmPassword } = req.body;
+  const { newPassword, confirmPassword } = req.body;
 
-  if (newPassword !== confirmPassword) {
-    return res.status(400).send('❌ Passwords do not match');
+  // Get verified email from session
+  const email = req.session.verifiedEmail;
+
+  if (!email) {
+    return res.status(403).send('❌ Unauthorized: verification required');
+  }
+
+  // Optional: sanitize input
+  const trimmedNewPassword = newPassword?.trim();
+  const trimmedConfirmPassword = confirmPassword?.trim();
+
+  if (!trimmedNewPassword || trimmedNewPassword !== trimmedConfirmPassword) {
+    return res.status(400).send('❌ Passwords do not match or are empty');
   }
 
   try {
-    const user = await Users.findOne({ Email });
+    const user = await Users.findOne({ Email: email }); // field name case-sensitive?
     if (!user) {
       return res.status(404).send('❌ User not found');
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await bcrypt.hash(trimmedNewPassword, 10);
     user.Password = hashedPassword;
     await user.save();
 
-    console.log(`✅ Password reset for ${Email}`);
+    // Optional: destroy session
+    req.session.verifiedEmail = null;
+
+    console.log(`✅ Password reset for ${email}`);
     res.redirect('/index.html');
   } catch (err) {
-    console.error('❌ Reset error:', err);
+    console.error('❌ Password reset error:', err);
     res.status(500).send('Internal Server Error');
   }
 });

@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
+const session = require('express-session'); // ✅ Added
 const { connectDB } = require('./mongodb');
-const routes = require('./routes'); // Import routes
+const routes = require('./routes');
 
 const app = express();
 const PORT = 8000;
@@ -13,7 +14,15 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../FRONTEND')));
 
-// Use routes
+// ✅ Session middleware (must be before routes)
+app.use(session({
+  secret: 'your-super-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
+// Routes
 app.use('/', routes);
 
 // Start server

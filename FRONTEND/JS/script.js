@@ -43,16 +43,23 @@ function capitalize(str) {
 // 🚀 DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   const contact = sessionStorage.getItem('contact')?.trim().toLowerCase();
-
+  
   // 📨 Save contact to sessionStorage on Send OTP
   const sendOtpForm = document.querySelector('form[action="/send-otp"]');
   if (sendOtpForm) {
-    sendOtpForm.addEventListener('submit', () => {
+    console.log('Form found'); // Confirm it's selected!
+    sendOtpForm.addEventListener('submit', (e) => {
+      e.preventDefault();
       const contactInput = sendOtpForm.querySelector('input[name="contact"]');
       if (contactInput) {
-        sessionStorage.setItem('contact', contactInput.value.trim().toLowerCase());
+        const value = contactInput.value.trim().toLowerCase();
+        console.log('About to store:', value);
+        sessionStorage.setItem('contact', value);
       }
+      sendOtpForm.submit();
     });
+  } else {
+    console.warn('sendOtpForm not found in DOM');
   }
 
   // 📥 Populate hidden fields for OTP verification and resend
