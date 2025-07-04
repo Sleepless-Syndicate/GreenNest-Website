@@ -104,6 +104,24 @@ body {
   font-size: 1rem;
 }
 
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
+/* Example: hiding a framework-injected eye icon */
+input[type="password"] + .default-eye-icon {
+  display: none;
+}
+
 .password-container {
   position: relative;
 }
@@ -148,6 +166,20 @@ body {
   text-decoration: underline;
 }
 
+.Home-Page-link {
+  display: block;
+  margin-top: 14px;
+  margin-right: 140px;
+  font-size: 0.9rem;
+  text-align: right;
+  text-decoration: none;
+  color: #3a5a40;
+}
+
+.Home-Page-link:hover {
+  text-decoration: underline;
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -158,14 +190,6 @@ button {
   font-size: 1rem;
   cursor: pointer;
   margin-top: 10px;
-}
-
-.toggle-link {
-  margin-top: 15px;
-  font-size: 0.9rem;
-  color: #3a5a40;
-  cursor: pointer;
-  text-align: center;
 }
 
 .hidden {
