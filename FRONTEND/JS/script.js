@@ -40,6 +40,19 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+document.querySelector('.profileImg').addEventListener('click', function () {
+  const menu = document.querySelector('.dropdown-menu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+});
+
+// Optional: Hide dropdown when clicking outside
+document.addEventListener('click', function (e) {
+  const profileContainer = document.querySelector('.profile-container');
+  if (!profileContainer.contains(e.target)) {
+    document.querySelector('.dropdown-menu').style.display = 'none';
+  }
+});
+
 // 🚀 DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   const contact = sessionStorage.getItem('contact')?.trim().toLowerCase();

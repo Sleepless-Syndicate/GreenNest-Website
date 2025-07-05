@@ -21,12 +21,13 @@ body {
 
 .logo {
   font-weight: 900;
-  font-size: 2.8rem;
+  font-size: 3rem;
   color: #2d6a4f;
   display: flex;
   align-items: center;
   gap: 14px;
   letter-spacing: 1px;
+  margin-left: 2cm;
 }
 
 .logo i {
@@ -48,6 +49,10 @@ body {
 .hero p {
   font-size: 1.1rem;
   margin-bottom: 30px;
+}
+
+.profile-container{
+    margin-left: 1cm;
 }
 
 .hero-buttons {
@@ -180,6 +185,36 @@ input[type="password"] + .default-eye-icon {
   text-decoration: underline;
 }
 
+.login-page-link{
+  display: block;
+  margin-top: 0px;
+  margin-left: 23cm;
+  font-size: 1.2rem;
+  text-align: right;
+  text-decoration: none;
+  color: #12581f;
+}
+
+.login-page-link:hover{
+  text-decoration: underline;
+  color: rgb(19, 7, 147);
+}
+
+.SignUp-page-link{
+  display: block;
+  margin-top: 0px;
+  margin-left: 1cm;
+  font-size: 1.2rem;
+  text-align: right;
+  text-decoration: none;
+  color: #12581f;
+}
+
+.SignUp-page-link:hover{
+  text-decoration: underline;
+  color: rgb(19, 7, 147);
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -247,4 +282,38 @@ footer {
   background: #ffffff;
   font-size: 0.9rem;
   color: #666;
+}
+
+.profileImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdown-menu li {
+  padding: 8px 20px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
 }
