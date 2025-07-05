@@ -215,6 +215,21 @@ input[type="password"] + .default-eye-icon {
   color: rgb(19, 7, 147);
 }
 
+.Home-link{
+  display: block;
+  margin-top: 0px;
+  margin-left: 24cm;
+  font-size: 1.2rem;
+  text-align: right;
+  text-decoration: none;
+  color: #12581f;
+}
+
+.Home-link:hover{
+  text-decoration: underline;
+  color: rgb(19, 7, 147);
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -296,11 +311,11 @@ footer {
   position: absolute;
   top: 50px;
   right: 0;
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: rgb(28, 222, 213);
+  border: 1px solid #0d5355;
   list-style: none;
   padding: 0;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(30, 119, 119, 0.1);
   z-index: 1000;
 }
 
@@ -310,10 +325,90 @@ footer {
 
 .dropdown-menu li a {
   text-decoration: none;
-  color: #333;
+  color: #1a703f;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  text-decoration: none;
+  color: #d1e2d8;
   display: block;
 }
 
 .dropdown-menu li:hover {
-  background-color: #f0f0f0;
+  background-color: #176d67;
+}
+
+.Profile-container {
+  max-width: 500px;
+  margin: auto;
+  background: #7df070;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile-pic {
+  display: block;
+  margin: 0 auto 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4CAF50;
+}
+
+h2, h4 {
+  text-align: center;
+  margin: 5px 0;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#editBtn {
+  background-color: #2196F3;
+  color: white;
+}
+
+#saveBtn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#saveBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.saved-message {
+  text-align: center;
+  color: green;
+  margin-top: 10px;
+  display: none;
 }

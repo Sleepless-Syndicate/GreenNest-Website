@@ -10,12 +10,20 @@ router.get('/GreenNest', (req, res) => {
   res.sendFile(path.join(__dirname, '../FRONTEND/HTML/index.html'));
 });
 
-router.get('/buyer-login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../FRONTEND/HTML/buyer-login.html'));
+router.get('/profile.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../FRONTEND/HTML/profile.html'));
 });
 
-router.get('/seller-login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../FRONTEND/HTML/seller-login.html'));
+router.get('/buyer.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../FRONTEND/HTML/buyer.html'));
+});
+
+router.get('/seller.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../FRONTEND/HTML/seller.html'));
+});
+
+router.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../FRONTEND/HTML/login.html'));
 });
 
 router.get('/forgot-password.html', (req, res) => {

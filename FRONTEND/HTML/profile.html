@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="../CSS/style.css" />
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #2ad76a; color: #333; padding: 20px;">
+
+  <div class="Profile-container">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7EiBcuORVZmYoKA0JeIqXTnoSvArdLXhA3w&s" alt="Profile Picture" class="profile-pic" />
+    <h2 id="fullName">Saikat Pradhan</h2>
+    <h4 id="username">saikat777</h4>
+
+    <label for="address">Address</label>
+    <textarea id="address" placeholder="Enter your address"></textarea>
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" />
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" placeholder="e.g. +91 9876543210" />
+
+    <label for="bio">Bio</label>
+    <textarea id="bio" placeholder="Tell us something about yourself..."></textarea>
+
+    <div class="button-group">
+      <button id="editBtn">✏️ Edit</button>
+      <button id="saveBtn" disabled>💾 Save</button>
+    </div>
+
+    <div class="saved-message" id="savedMsg">✅ Profile saved!</div>
+  </div>
+
+  <script src="../JS/script.js"></script>
+</body>
+</html>

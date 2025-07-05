@@ -53,6 +53,48 @@ document.addEventListener('click', function (e) {
   }
 });
 
+const fields = ['address', 'dob', 'phone', 'bio'];
+const editBtn = document.getElementById('editBtn');
+const saveBtn = document.getElementById('saveBtn');
+
+// Load saved data
+window.addEventListener('DOMContentLoaded', () => {
+  fields.forEach(field => {
+    const saved = localStorage.getItem(field);
+    if (saved) document.getElementById(field).value = saved;
+  });
+});
+
+// Enable editing
+editBtn.addEventListener('click', () => {
+  fields.forEach(field => {
+    document.getElementById(field).disabled = false;
+  });
+  saveBtn.disabled = false;
+  editBtn.disabled = true;
+});
+
+// Save and disable editing
+saveBtn.addEventListener('click', () => {
+  fields.forEach(field => {
+    const el = document.getElementById(field);
+    localStorage.setItem(field, el.value);
+    el.disabled = true;
+  });
+  saveBtn.disabled = true;
+  editBtn.disabled = false;
+  showSavedMessage();
+});
+
+function showSavedMessage() {
+  const msg = document.getElementById('savedMsg');
+  msg.style.display = 'block';
+  clearTimeout(msg.timeout);
+  msg.timeout = setTimeout(() => {
+    msg.style.display = 'none';
+  }, 1500);
+}
+
 // 🚀 DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   const contact = sessionStorage.getItem('contact')?.trim().toLowerCase();
