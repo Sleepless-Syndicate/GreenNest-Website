@@ -40,93 +40,160 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-document.querySelector('.profileImg').addEventListener('click', function () {
-  const menu = document.querySelector('.dropdown-menu');
-  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-});
+// 📝 Editable Profile Fields
+document.addEventListener('DOMContentLoaded', () => {
+  const fields = ['address', 'dob', 'currentLoc', 'bio'];
+  const editBtn = document.getElementById('editBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const fileInput = document.getElementById('fileInput');
+  const profileImage = document.getElementById('profileImage');
 
-// Optional: Hide dropdown when clicking outside
-document.addEventListener('click', function (e) {
-  const profileContainer = document.querySelector('.profile-container');
-  if (!profileContainer.contains(e.target)) {
-    document.querySelector('.dropdown-menu').style.display = 'none';
+  // 🔁 Load saved field values from localStorage
+  fields.forEach(field => {
+    const el = document.getElementById(field);
+    const saved = localStorage.getItem(field);
+    if (el) {
+      if (saved) el.value = saved;
+      el.disabled = false; // Enable fields by default
+    }
+  });
+
+  // 🔁 Load saved profile image from localStorage
+  const savedImage = localStorage.getItem('profileImage');
+  if (savedImage && profileImage) {
+    profileImage.src = savedImage;
+  }
+
+  // 📸 Handle profile image upload and auto-save
+  if (fileInput && profileImage) {
+    fileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const base64Image = e.target.result;
+          profileImage.src = base64Image;
+          localStorage.setItem('profileImage', base64Image);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // 🔘 Initial button state
+  if (saveBtn) saveBtn.disabled = false;
+  if (editBtn) editBtn.disabled = true;
+
+  // 💾 Save profile fields and send to backend
+  if (saveBtn) {
+    saveBtn.addEventListener('click', async () => {
+      const data = {
+        Address: document.getElementById('address').value,
+        DOB: document.getElementById('dob').value,
+        CurrentLocation: document.getElementById('currentLoc').value,
+        Bio: document.getElementById('bio').value,
+        ProfileImage: document.getElementById('profileImage').src
+      };
+
+      // Save to localStorage and disable fields
+      fields.forEach(field => {
+        const el = document.getElementById(field);
+        if (el) {
+          localStorage.setItem(field, el.value);
+          el.disabled = true;
+        }
+      });
+
+      saveBtn.disabled = true;
+      editBtn.disabled = false;
+      showSavedMessage();
+
+      // Send to backend
+      try {
+        const res = await fetch('/api/profile/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        console.log(result.message || result.error);
+      } catch (err) {
+        console.error('❌ Failed to update profile:', err);
+      }
+    });
+  }
+
+  // ✏️ Enable editing
+  if (editBtn) {
+    editBtn.addEventListener('click', () => {
+      fields.forEach(field => {
+        const el = document.getElementById(field);
+        if (el) el.disabled = false;
+      });
+      saveBtn.disabled = false;
+      editBtn.disabled = true;
+    });
+  }
+
+  // ✅ Show "Profile saved!" message
+  function showSavedMessage() {
+    const msg = document.getElementById('savedMsg');
+    if (!msg) return;
+    msg.style.display = 'block';
+    clearTimeout(msg.timeout);
+    msg.timeout = setTimeout(() => {
+      msg.style.display = 'none';
+    }, 1500);
   }
 });
 
-const fields = ['address', 'dob', 'phone', 'bio'];
-const editBtn = document.getElementById('editBtn');
-const saveBtn = document.getElementById('saveBtn');
+// 👤 Profile Dropdown Toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const profileImg = document.querySelector('.profileImg');
+  const dropdown = document.querySelector('.dropdown-menu');
+  const profileContainer = document.querySelector('.profile-container');
 
-// Load saved data
-window.addEventListener('DOMContentLoaded', () => {
-  fields.forEach(field => {
-    const saved = localStorage.getItem(field);
-    if (saved) document.getElementById(field).value = saved;
-  });
+  if (profileImg && dropdown) {
+    profileImg.addEventListener('click', function () {
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!profileContainer?.contains(e.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+  }
 });
 
-// Enable editing
-editBtn.addEventListener('click', () => {
-  fields.forEach(field => {
-    document.getElementById(field).disabled = false;
-  });
-  saveBtn.disabled = false;
-  editBtn.disabled = true;
-});
-
-// Save and disable editing
-saveBtn.addEventListener('click', () => {
-  fields.forEach(field => {
-    const el = document.getElementById(field);
-    localStorage.setItem(field, el.value);
-    el.disabled = true;
-  });
-  saveBtn.disabled = true;
-  editBtn.disabled = false;
-  showSavedMessage();
-});
-
-function showSavedMessage() {
-  const msg = document.getElementById('savedMsg');
-  msg.style.display = 'block';
-  clearTimeout(msg.timeout);
-  msg.timeout = setTimeout(() => {
-    msg.style.display = 'none';
-  }, 1500);
-}
-
-// 🚀 DOM Ready
+// 🔐 OTP Contact Handling
 document.addEventListener('DOMContentLoaded', () => {
   const contact = sessionStorage.getItem('contact')?.trim().toLowerCase();
-  
-  // 📨 Save contact to sessionStorage on Send OTP
+
+  // 📨 Save contact on Send OTP
   const sendOtpForm = document.querySelector('form[action="/send-otp"]');
   if (sendOtpForm) {
-    console.log('Form found'); // Confirm it's selected!
     sendOtpForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const contactInput = sendOtpForm.querySelector('input[name="contact"]');
       if (contactInput) {
         const value = contactInput.value.trim().toLowerCase();
-        console.log('About to store:', value);
         sessionStorage.setItem('contact', value);
       }
       sendOtpForm.submit();
     });
-  } else {
-    console.warn('sendOtpForm not found in DOM');
   }
 
-  // 📥 Populate hidden fields for OTP verification and resend
+  // 📥 Populate hidden fields
   const contactField = document.getElementById('contactField');
   const resendContactField = document.getElementById('resendContactField');
-
   if (contact) {
     if (contactField) contactField.value = contact;
     if (resendContactField) resendContactField.value = contact;
   }
 
-  // ⏳ Countdown logic for Resend OTP
+  // ⏳ Resend OTP Countdown
   const resendForm = document.getElementById('resendForm');
   const resendBtn = document.getElementById('resendBtn');
   const countdownSpan = document.getElementById('countdown');
@@ -151,18 +218,64 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1000);
     };
 
-    // Start countdown on page load
     startCountdown();
 
-    // Reset countdown on resend
     resendForm.addEventListener('submit', () => {
       timeLeft = 59;
       startCountdown();
     });
   }
 
-  // 🔁 Fallback to ensure contactField is always synced
+  // 🔁 Fallback to sync contactField
   if (contact && contactField && !contactField.value) {
     contactField.value = contact;
+  }
+});
+
+// Profile Load By User Details
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const res = await fetch('/api/profile');
+      const user = await res.json();
+
+      if (user.error) {
+        console.warn(user.error);
+        return;
+      }
+
+      // 🧠 Update profile fields if they exist on the page
+      const fullNameEl = document.getElementById('fullName');
+      const usernameEl = document.getElementById('username');
+      const addressEl = document.getElementById('address');
+      const dobEl = document.getElementById('dob');
+      const currentLocEl = document.getElementById('currentLoc');
+      const bioEl = document.getElementById('bio');
+      const profileImgEl = document.getElementById('profileImage');
+
+      if (fullNameEl) fullNameEl.innerText = user.FullName;
+      if (usernameEl) usernameEl.innerText = user.UserName;
+      if (addressEl) addressEl.value = user.Address;
+      if (dobEl) dobEl.value = user.DOB;
+      if (currentLocEl) currentLocEl.value = user.CurrentLocation;
+      if (bioEl) bioEl.value = user.Bio;
+      if (profileImgEl) profileImgEl.src = user.ProfileImage;
+
+    } catch (err) {
+      console.error('❌ Failed to load profile:', err);
+    }
+});
+
+// LogOut
+document.addEventListener('DOMContentLoaded', () => {
+  const logOutBtn = document.getElementById('logOut');
+  if (logOutBtn) {
+    logOutBtn.addEventListener('click', () => {
+      // Optional: clear local/session storage
+      localStorage.clear();
+      sessionStorage.clear();
+
+      // Redirect to logout route
+      window.location.href = '/logout';
+    });
   }
 });

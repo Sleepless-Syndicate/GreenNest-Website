@@ -185,6 +185,21 @@ input[type="password"] + .default-eye-icon {
   text-decoration: underline;
 }
 
+.Home-Page-profile-link{
+  display: block;
+  margin-top: 14px;
+  margin-right: 180px;
+  font-size: 0.9rem;
+  text-align: right;
+  text-decoration: none;
+  color: #3a5a40;
+}
+
+.Home-Page-profile-link:hover {
+  text-decoration: underline;
+}
+
+
 .login-page-link{
   display: block;
   margin-top: 0px;
@@ -315,28 +330,36 @@ footer {
   border: 1px solid #0d5355;
   list-style: none;
   padding: 0;
+  margin: 0;
   box-shadow: 0 4px 8px rgba(30, 119, 119, 0.1);
   z-index: 1000;
+  width: max-content; /* ✅ Shrinks to fit content */
+  min-width: 100px;
+  border-radius: 4px;
 }
 
 .dropdown-menu li {
-  padding: 8px 20px;
+  padding: 0; /* Remove padding here to apply it uniformly to inner elements */
 }
 
-.dropdown-menu li a {
+.dropdown-menu li a,
+.dropdown-menu li p {
+  display: block;
+  padding: 10px 16px;
+  margin: 0;
   text-decoration: none;
   color: #1a703f;
-  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.dropdown-menu li a:hover {
-  text-decoration: none;
-  color: #d1e2d8;
-  display: block;
-}
-
+.dropdown-menu li a:hover,
+.dropdown-menu li p:hover,
 .dropdown-menu li:hover {
   background-color: #176d67;
+  color: #d1e2d8;
 }
 
 .Profile-container {
@@ -348,14 +371,32 @@ footer {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.profile-pic {
+.profile-pic-wrapper {
+  position: relative;
   display: block;
-  margin: 0 auto 20px;
   width: 120px;
   height: 120px;
+  margin: 0 auto 20px;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #4CAF50;
+}
+
+.edit-photo-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #ffffffcc;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  border: 1px solid #7f7777;
 }
 
 h2, h4 {
@@ -392,12 +433,12 @@ button {
 }
 
 #editBtn {
-  background-color: #2196F3;
+  background-color: #1b78c4;
   color: white;
 }
 
 #saveBtn {
-  background-color: #4CAF50;
+  background-color: #1f6a21;
   color: white;
 }
 

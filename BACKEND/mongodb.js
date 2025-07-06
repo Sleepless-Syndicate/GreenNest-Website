@@ -14,10 +14,16 @@ const connectDB = async () => {
 // 👤 User Schema & Model
 const userSchema = new mongoose.Schema(
   {
+    FullName: { type: String, required: true},
     UserName: { type: String, required: true, unique: true },
     PhoneNumber: { type: String, required: true },
     Email: { type: String, required: true, unique: true },
     Password: { type: String, required: true },
+    Address: { type: String, required: false},
+    DOB: { type: Date, required: false },
+    CurrentLocation: { type: String, required: false},
+    Bio: { type: String, required: false},
+    ProfileImage: { type: String, required: false},
   },
   { timestamps: true }
 );

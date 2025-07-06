@@ -9,29 +9,39 @@
 <body style="font-family: Arial, sans-serif; background-color: #2ad76a; color: #333; padding: 20px;">
 
   <div class="Profile-container">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7EiBcuORVZmYoKA0JeIqXTnoSvArdLXhA3w&s" alt="Profile Picture" class="profile-pic" />
-    <h2 id="fullName">Saikat Pradhan</h2>
-    <h4 id="username">saikat777</h4>
-
-    <label for="address">Address</label>
-    <textarea id="address" placeholder="Enter your address"></textarea>
-
-    <label for="dob">Date of Birth</label>
-    <input type="date" id="dob" />
-
-    <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" placeholder="e.g. +91 9876543210" />
-
-    <label for="bio">Bio</label>
-    <textarea id="bio" placeholder="Tell us something about yourself..."></textarea>
-
-    <div class="button-group">
-      <button id="editBtn">✏️ Edit</button>
-      <button id="saveBtn" disabled>💾 Save</button>
-    </div>
-
-    <div class="saved-message" id="savedMsg">✅ Profile saved!</div>
+  <div class="profile-pic-wrapper">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7EiBcuORVZmYoKA0JeIqXTnoSvArdLXhA3w&s" 
+         alt="Profile Picture" 
+         class="profile-pic" 
+         id="profileImage" />
+    <label for="fileInput" class="edit-photo-icon">📷</label>
+    <input type="file" id="fileInput" name="profileImage" accept="image/*" style="display: none;" />
   </div>
+
+  <h2 id="fullName">FullName</h2>
+  <h4 id="username">UserName</h4>
+
+  <label for="address">Address</label>
+  <textarea id="address" name="Address" placeholder="Enter your address"></textarea>
+
+  <label for="dob">Date of Birth</label>
+  <input type="date" name="DOB" id="dob" />
+
+  <label for="currentLoc">Current Location</label>
+  <input type="text" name="CurrentLocation" id="currentLoc" placeholder="Location" />
+
+  <label for="bio">Bio</label>
+  <textarea id="bio" name="Bio" placeholder="Tell us something about yourself..."></textarea>
+
+  <div class="button-group">
+    <button id="editBtn">✏️ Edit</button>
+    <button id="saveBtn" disabled>💾 Save</button>
+  </div>
+
+  <div class="saved-message" id="savedMsg">✅ Profile saved!</div>
+
+  <a href="index.html" class="Home-Page-profile-link">Back to Home Page</a>
+</div>
 
   <script src="../JS/script.js"></script>
 </body>
